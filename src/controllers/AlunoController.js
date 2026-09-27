@@ -35,6 +35,21 @@ class AlunoController {
             return response.status(e.statusCode).json({error: e.message});
         }
     }
+
+    async update(request, response) {
+        try {
+            const aluno = await alunoService.update(
+                request.params.id,
+                request.body
+            );
+
+            return response.status(200).json({ aluno });
+        } catch(e) {
+            return response.status(e.statusCode).json({ error: e.message });
+        }
+    }
 }
+
+// Utilizei 200 (linha 46) porque se trata da atualização de um recurso existente, o qual estou devolvendo o aluno atualizado no corpo da resposta
 
 module.exports = new AlunoController();
