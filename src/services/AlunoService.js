@@ -88,11 +88,36 @@ class AlunoService {
             throw e;
         }
     }
+
+    async delete(id){
+        id = Number(id);
+
+        const aluno = await prisma.aluno.findUnique({
+            where: {
+                id: id
+            }
+        });
+
+        if(!aluno) {
+            throw new AlunoNaoEncontradoError();
+        }
+
+        await prisma.aluno.delete({
+            where: {
+                id: id
+            }
+        });
+    }
 }
 
-/*
+/* Requisito 03
  * Aqui não basta apenas chamar "prisma.aluno.update()", porque primeiro é necessário garantir que o aluno existe, e assim reutilizar "AlunoNaoEncontradoError (Requisito 2)"
  * O que é esse código "P2002" (linha 84)? Pelo que entendi, o código P2002 é o erro que o Prisma utiliza para uma violação de restrição única, como o @unique do email.
+*/
+
+/* Requisito 04
+ * Por que não precisamos retornar o aluno?
+ * Porque o requisito pede uma remoção bem sucedida e pergunta qual status deve ser utilizado.
 */
 
 module.exports = new AlunoService();

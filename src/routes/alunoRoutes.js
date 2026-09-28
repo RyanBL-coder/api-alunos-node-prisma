@@ -9,6 +9,7 @@ router.get("/", alunoController.findMany);
 router.get("/:id", alunoController.findUnique);
 router.post("/", validarAluno, alunoController.create);
 router.put("/:id", validarAlunoUpdate, alunoController.update);
+router.delete("/:id", alunoController.delete);
 
 // Utilizei PUT porque já existe um schema que permite enviar somente os campos que desejo alterar
 
