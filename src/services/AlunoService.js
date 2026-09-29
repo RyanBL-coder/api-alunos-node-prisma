@@ -15,6 +15,23 @@ class AlunoService {
         if(page < 1 || pageSize < 1){
             throw new PaginacaoInvalidaError();
         }
+
+        const camposOrdenacao = [
+            "id",
+            "nome",
+            "email",
+            "createdAt",
+            "updatedAt"
+        ];
+
+        if(!camposOrdenacao.includes(orderBy)) {
+            throw new PaginacaoInvalidaError("Campo de ordenação inválido");
+        }
+
+        if(order !== "asc" && order !== "desc"){
+            throw new PaginacaoInvalidaError("A ordenação deve ser 'asc' ou 'desc'");
+        }
+
         const alunos = await prisma.aluno.findMany({
             skip: (page - 1) * pageSize,
             take: Number(pageSize),
